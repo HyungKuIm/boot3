@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>영화 수정</h1>
+	<form method="post" action="" th:object="${movie}">
+		<input type="hidden" name="movieId" th:field="*{movieId}" />
+		<label for="title">제목:</label>
+		<input type="text" name="title" id="title" th:field="*{title}" /> <br/>
+		<label for="price">가격:</label>
+		<input type="text" name="price" id="price" th:field="*{price}" /> <br/>
+		<label for="synopsis">줄거리:</label>
+		<textarea name="synopsis" id="synopsis" rows="6" cols="50"  th:field="*{synopsis}"></textarea> <br/>
+		<input type="submit" value="수정" name="update" />
+		<input type="submit" value="삭제" name="delete" />
+	</form>
+</body>
+</html>
