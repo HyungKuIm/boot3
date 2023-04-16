@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>고객 추가 등록</title>
@@ -28,7 +28,7 @@
 		<input type="text" name="customerName" id="customerName" th:field="*{customerName}"><br>
 		
 		<label for="customerPass">비밀번호:</label>
-		<input type="text" name="customerPass" id="customerPass" th:field="*{customerPass}"><br>
+		<input type="password" name="customerPass" id="customerPass" th:value="*{customerPass}"><br>
 		
 		<label for="customerBirth">생년월일:</label>
 		<input type="text" name="customerBirth" id="customerBirth" th:field="*{customerBirth}"><br>
