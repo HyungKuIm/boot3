@@ -73,6 +73,15 @@ public class CustomerController {
 		Customer customers = customerRepository.findById(customer.getCustomerCode()).get();
 		customers.setCustomerName(customer.getCustomerName());
 //		System.out.println(customer.getCustomerName());
+		String oldPassword = customers.getCustomerPass();
+		String newPassword = customer.getCustomerPass();
+
+		if (!newPassword.equals(oldPassword)) {
+			//비번을 변경한 것이므로 암호화를 한다.
+			customer.setCustomerPass(passwordEncoder.encode(newPassword));
+		}
+
+
 		customers.setCustomerPass(customer.getCustomerPass());
 		customers.setCustomerBirth(customer.getCustomerBirth());
 		customers.setCustomerJob(customer.getCustomerJob());
