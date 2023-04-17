@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,9 @@ public class HelloController {
 		pageNumber = (pageNumber == null) ? 1 : pageNumber;
 
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("index");
+//		mav.setViewName("index");
+		mav.setViewName("homeLayout");
+		mav.addObject("contents", "index :: home_contents");
 		mav.addObject("msg", "안녕하세요2");
 		//영화 id 순으로 정렬
 
@@ -45,6 +48,7 @@ public class HelloController {
 		return mav;
 	}
 
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
 		return "movieCreate";
@@ -59,6 +63,7 @@ public class HelloController {
 	}
 
 
+//	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String update(@PathVariable Integer id, Model model) {
 		Movie movie = movieRepository.findById(id).get();
@@ -67,6 +72,7 @@ public class HelloController {
 	}
 
 	// 수정
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@RequestMapping(params = "update", value = "/update/{movieId}", method = RequestMethod.POST)
 	public String update(Movie movie, Model model) {
 		// smovie: 찾은 영화(searched movie)
@@ -79,6 +85,7 @@ public class HelloController {
 	}
 
 	// 삭제
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@RequestMapping(params = "delete", value = "/update/{movieId}", method = RequestMethod.POST)
 	public String delete(@PathVariable Integer movieId, Model model) {
 		Movie smovie = movieRepository.findById(movieId).get();
