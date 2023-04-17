@@ -78,3 +78,7 @@ h2 {
   border-radius: 0px;
   background-color: rgba(63, 78, 191, 1);
 }
+
+.text-danger {
+  color: red;
+}

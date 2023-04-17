@@ -11,23 +11,42 @@
 </head>
 <body>
 	<div>
-		탑입니다.
-		<div sec:authorize="isAuthenticated()">
-			<p>사용자id: <span sec:authentication="name"></span></p>
+		<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <div class="col-md-3 mb-2 mb-md-0">
+        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+          Spring Sample
+        </a>
+      </div>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a th:href="@{/}" class="nav-link px-2 link-secondary">Home</a></li>
+        <li><a th:href="@{/cgv}" class="nav-link px-2">Movies</a></li>
+        <li><a th:href="@{/admin}" class="nav-link px-2">Admin</a></li>
+        
+      </ul>
+		
+	      <div class="col-md-3 text-end" sec:authorize="isAnonymous()">
+	        <a th:href="@{/login}">로그인</a> 
+	        <!-- <button type="button" class="btn btn-outline-primary me-2">Login</button> -->
+	        <button type="button" class="btn btn-primary">Sign-up</button>
+	      </div>
+      	
+      	<div sec:authorize="isAuthenticated()">
+			<p>사용자id: <span sec:authentication="name"></span> </p>
 			<p>ROLE: <span sec:authentication="principal.authorities"></span></p>
-			<!-- 로그아웃 -->
+			<!-- 로그아웃 처리 -->
 			<form method="post" th:action="@{/logout}">
 				<button type="submit">로그아웃</button>
 			</form>
 		</div>
-		<div sec:authorize="isAnonymous()">
-			<p>
-				<a th:href="@{/login}">로그인</a>
-			</p>
-		</div>
+    </header>
+		
+	
 	</div>
-	<div th:include="__${contents}__"></div>
-	<div>바텀입니다... &copy; 2024 HyungKu Im All rights reserved. 맘대로 퍼가세요...</div>
+	<div th:include="__${contents}__" class="container"></div>
+	<footer>
+		<div>바텀입니다... &copy; 2024 HyungKu Im All rights reserved. 맘대로 퍼가세요...</div>
+	</footer>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 </html>

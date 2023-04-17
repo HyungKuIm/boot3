@@ -5,20 +5,20 @@
 <meta charset="UTF-8">
 <title>로 그 인</title>
 <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
-  <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
-  <script>
-    $(function(){
-      $("#signIn").click(function() {
-        $("#loginForm").submit();
-      });
-    });
-  </script>
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<script>
+$(function(){
+	$("#signIn").click(function(){
+		$("#loginForm").submit();
+	});
+});
+</script>
 </head>
 <body>
   <div class="signin">
     <div class="back-img">
       <div class="sign-in-text">
-        <h2 class="active">Sign In</h2>
+        <h2 class="active" id="SignInTitle">Sign In</h2>
         <h2 class="nonactive">Sign Up</h2>
       </div><!--/.sign-in-text-->
       <div class="layer">
@@ -43,6 +43,12 @@
 <!--           <span class="mdl-textfield__error">Minimum 8 characters</span> -->
         </div>
         <br/>
+
+        <p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'] != null}"
+          th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" class="text-danger">
+          로그인 에러 메시지
+        </p>
+
         <p class="forgot-text">Forgot Password ?</p>
         <!--CheckBox-->
         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">

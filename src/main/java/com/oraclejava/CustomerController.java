@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
 @Controller
+@RequestMapping(value="/admin/customers")
 public class CustomerController {
 
 	private static final int PAGE_SIZE = 10;
@@ -20,13 +21,15 @@ public class CustomerController {
     @Autowired
 	private PasswordEncoder passwordEncoder;
 		
-	@RequestMapping(value = "/customers", method = RequestMethod.GET)
+	@RequestMapping(value = {"","/"}, method = RequestMethod.GET)
 	public ModelAndView customers(@RequestParam(required = false, value = "page") Integer pageNumber) {
 		pageNumber = (pageNumber == null) ?  1 : pageNumber; 
  		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("customers");
-		
+//		mav.setViewName("customers");
+		mav.setViewName("homeLayout");
+		mav.addObject("contents", "adminHome :: admin_contents");
+		mav.addObject("admin_contents", "customers :: admin_contents");
 		//Page<Customer> customers = CustomerRepository.findAll(PageRequest.of(pageNumber -1 , PAGE_SIZE, Sort.by("customer_code")));
 		Page<Customer> customers = customerRepository.findAll(PageRequest.of(pageNumber -1 , PAGE_SIZE, Sort.by("customerCode")));
 		
@@ -42,12 +45,12 @@ public class CustomerController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/customers/create", method = RequestMethod.GET)
+	@RequestMapping(value="/create", method = RequestMethod.GET)
 	public String create(Model model) {
 		return "customerCreate";
 	}
 	
-	@RequestMapping(value="/customers/create", method = RequestMethod.POST)
+	@RequestMapping(value="/create", method = RequestMethod.POST)
 	public String create(Customer customer, Model model) {
 		
 		String pass = customer.getCustomerPass();
@@ -56,10 +59,10 @@ public class CustomerController {
 		
 		customerRepository.save(customer);
 		
-		return "redirect:/customers/";
+		return "redirect:/admin/customers/";
 	}
 	
-	@RequestMapping(value = "customers/update/{customerCode}", method = RequestMethod.GET)
+	@RequestMapping(value = "/update/{customerCode}", method = RequestMethod.GET)
 	public String update(@PathVariable Integer customerCode, Model model) {
 		Customer customer = customerRepository.findById(customerCode).get();
 		model.addAttribute("customer", customer);
@@ -67,7 +70,7 @@ public class CustomerController {
 	}
 	
 	
-	@RequestMapping(params = "update", value = "customers/update/{customerCode}", method = RequestMethod.POST)
+	@RequestMapping(params = "update", value = "/update/{customerCode}", method = RequestMethod.POST)
 	public String update(Customer customer, Model model) {
 		
 		Customer customers = customerRepository.findById(customer.getCustomerCode()).get();
@@ -92,14 +95,14 @@ public class CustomerController {
 		
 		customerRepository.save(customers);
 		
-		return "redirect:/customers/";
+		return "redirect:/admin/customers/";
 	}
 	
 	@RequestMapping(params = "delete", value = "customers/update/{customerCode}", method = RequestMethod.POST)
 	public String delete(@PathVariable Integer customerCode, Model model) {
 		Customer cust = customerRepository.findById(customerCode).get();
 		customerRepository.delete(cust);
-		return "redirect:/customers/";
+		return "redirect:/admin/customers/";
 	}
 }
 
