@@ -56,7 +56,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                        .deleteCookies("JSESSIONID");
+
+        // Remember Me 설정
+        http.rememberMe()
+                .key("uniqueKeyAndSecret")
+                .rememberMeParameter("remember-me")
+                .rememberMeCookieName("remember-me")
+                .tokenValiditySeconds(86400);
 
 
     }
